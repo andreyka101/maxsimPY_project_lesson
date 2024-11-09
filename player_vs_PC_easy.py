@@ -1,4 +1,5 @@
-def player_vs_player_fun_game(dist_button):
+import random
+def player_vs_PC_easy(dist_button):
     str_o_x = "x"
     for i in range(2):
         if(i == 1):
@@ -90,4 +91,17 @@ def player_vs_player_fun_game(dist_button):
         "end" : False
     }
 
-        
+
+
+
+def f_PC_easy(dist_button):
+    free_button_arr = []
+    for key , button_i  in dist_button.items():
+        if(button_i["text"] == " "):
+            free_button_arr.append(key)
+    
+    if(len(free_button_arr) == 0): return
+    choice_PC = random.randint(1 , len(free_button_arr))
+    dist_button[free_button_arr[choice_PC - 1]].config(text="o")
+
+

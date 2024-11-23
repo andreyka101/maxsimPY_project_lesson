@@ -98,18 +98,48 @@ def f_PC_hard(dist_button):
     global num_bool_hard_1
     arr_corner_buttons_all = [dist_button['button_X1_Y1'] , dist_button['button_X3_Y1'] , dist_button['button_X3_Y3'] , dist_button['button_X1_Y3']]
     arr_corner_buttons_all = list(filter(lambda x: x["text"] == " " , arr_corner_buttons_all))
-    if(dist_button['button_X2_Y2']["text"] == " "):
+
+
+    bool_progress_indicator = True
+    for y_index in range(1,4):
+        if(dist_button[f'button_X1_Y{y_index}']["text"] == dist_button[f'button_X3_Y{y_index}']["text"] and dist_button[f'button_X1_Y{y_index}']["text"] != " " and bool_progress_indicator and dist_button[f'button_X2_Y{y_index}']["text"] == " "):
+            dist_button[f'button_X2_Y{y_index}'].config(text="o")
+            bool_progress_indicator = False
+        for x_index  in range(1,3):
+            if(dist_button[f'button_X{x_index}_Y{y_index}']["text"] == dist_button[f'button_X{x_index+1}_Y{y_index}']["text"] and dist_button[f'button_X{x_index}_Y{y_index}']["text"] != " " and bool_progress_indicator and (dist_button[f'button_X1_Y{y_index}']["text"] == " " or dist_button[f'button_X2_Y{y_index}']["text"] == " " or dist_button[f'button_X3_Y{y_index}']["text"] == " ")):
+                # dist_button[f'button_X{x_index}_Y{y_index}'].config(bg="#3e8bff")
+                # dist_button[f'button_X{x_index+1}_Y{y_index}'].config(bg="#3e8bff")
+                bool_progress_indicator = False
+                if(x_index == 1):
+                    dist_button[f'button_X3_Y{y_index}'].config(text="o")
+                else:
+                    dist_button[f'button_X1_Y{y_index}'].config(text="o")
+    for x_index in range(1,4):
+        if(dist_button[f'button_X{x_index}_Y1']["text"] == dist_button[f'button_X{x_index}_Y3']["text"] and dist_button[f'button_X{x_index}_Y1']["text"] != " " and bool_progress_indicator and dist_button[f'button_X{x_index}_Y2']["text"] == " "):
+            dist_button[f'button_X{x_index}_Y2'].config(text="o")
+            bool_progress_indicator = False
+        for y_index  in range(1,3):
+            if(dist_button[f'button_X{x_index}_Y{y_index}']["text"] == dist_button[f'button_X{x_index}_Y{y_index+1}']["text"] and dist_button[f'button_X{x_index}_Y{y_index}']["text"] != " " and bool_progress_indicator and (dist_button[f'button_X{x_index}_Y1']["text"] == " " or dist_button[f'button_X{x_index}_Y2']["text"] == " " or dist_button[f'button_X{x_index}_Y3']["text"] == " ")):
+                bool_progress_indicator = False
+                dist_button[f'button_X{x_index}_Y{y_index}'].config(bg="#3e8bff")
+                dist_button[f'button_X{x_index}_Y{y_index+1}'].config(bg="#3e8bff")
+                if(y_index == 1):
+                    dist_button[f'button_X{x_index}_Y3'].config(text="o")
+                else:
+                    dist_button[f'button_X{x_index}_Y1'].config(text="o")
+    for y_x_index  in range(1,3):
+        if(dist_button[f'button_X{y_x_index}_Y{y_x_index}']["text"] == dist_button[f'button_X{y_x_index+1}_Y{y_x_index+1}']["text"] and dist_button[f'button_X{y_x_index}_Y{y_x_index}']["text"] != "" and bool_progress_indicator):
+            dist_button[f'button_X{y_x_index}_Y{y_x_index}'].config(bg="#661b88")
+
+
+    if(dist_button['button_X2_Y2']["text"] == " " and bool_progress_indicator):
         dist_button['button_X2_Y2'].config(text="o")
-    elif(len(arr_corner_buttons_all) != 0 and num_bool_hard_1):
+    elif(len(arr_corner_buttons_all) != 0 and num_bool_hard_1 and bool_progress_indicator):
         num_bool_hard_1 = False
         rund = random.randint(0,len(arr_corner_buttons_all) -1)
         arr_corner_buttons_all[rund].config(text="o")
-    else:
-        for x_index in range(1,3):
-            for y_index  in range(1,4):
-                if(dist_button[f'button_X{x_index}_Y{y_index}']["text"] == dist_button[f'button_X{x_index+1}_Y{y_index}']["text"] and dist_button[f'button_X{x_index}_Y{y_index}']["text"] != " "):
-                    dist_button[f'button_X{x_index}_Y{y_index}'].config(bg="#3e8bff")
-                    dist_button[f'button_X{x_index+1}_Y{y_index}'].config(bg="#3e8bff")
+    print(bool_progress_indicator)
+    bool_progress_indicator = True
 
     
 

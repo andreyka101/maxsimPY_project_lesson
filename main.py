@@ -4,10 +4,15 @@ import player_vs_PC_easy
 import player_vs_PC_hard
 root = Tk()
 root.geometry("600x500")
+
+progress_indicator_main = False
+
 def remove_buttons_player_vs_player():
     player_vs_player_button.place(x=-100,y=-100)
     player_vs_PC_easy_button.place(x=-100,y=-100)
     player_vs_PC_hard_button.place(x=-100,y=-100)
+    global progress_indicator_main
+    progress_indicator_main = True
     render_button_games_player()
     text_lab.place(x=200 , y =50)
     root.config(bg="#eeff61")
@@ -16,6 +21,9 @@ def remove_buttons_player_vs_PC_easy():
     player_vs_player_button.place(x=-100,y=-100)
     player_vs_PC_easy_button.place(x=-100,y=-100)
     player_vs_PC_hard_button.place(x=-100,y=-100)
+    global progress_indicator_main
+    progress_indicator_main = False
+    game_restart_button.place(x = 260 , y = 400)
     render_button_games_PC_easy()
     text_lab.place(x=200 , y =50)
     root.config(bg="#eeff61")
@@ -24,6 +32,9 @@ def remove_buttons_player_vs_PC_hard():
     player_vs_player_button.place(x=-100,y=-100)
     player_vs_PC_easy_button.place(x=-100,y=-100)
     player_vs_PC_hard_button.place(x=-100,y=-100)
+    global progress_indicator_main
+    progress_indicator_main = False
+    game_restart_button.place(x = 260 , y = 400)
     render_button_games_PC_hard()
     text_lab.place(x=200 , y =50)
     root.config(bg="#eeff61")
@@ -43,7 +54,9 @@ player_vs_PC_hard_button.place(x=0,y=60)
 
 
 def restart_fun():
-    game_restart_button.place(x=-111,y=-111)
+    global progress_indicator_main
+    if(progress_indicator_main):
+        game_restart_button.place(x=-111,y=-111)
     global move_symbol
     move_symbol = True
     text_lab.config(text="ходит игрок X")
@@ -118,9 +131,9 @@ def main_fun_games_PC_hard(event):
     dist_answer = player_vs_PC_hard.player_vs_PC_hard(dist_button_games)
     if(button_id["text"] == " " and (not dist_answer["end"])):
         button_id.config(text= "x")
-        # text_lab.config(text="ходит игрок O")
-        player_vs_PC_hard.f_PC_hard(dist_button_games)
         dist_answer = player_vs_PC_hard.player_vs_PC_hard(dist_button_games)
+        if(not dist_answer["end"]):
+            player_vs_PC_hard.f_PC_hard(dist_button_games)
             
         if(dist_answer["end"]):
             if(dist_answer["symbol"] == "none"):

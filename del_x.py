@@ -1,3 +1,4 @@
+import threading
 import time 
 from tkinter import *
 import random
@@ -17,7 +18,7 @@ old_numbers_of_pair= [0,0]
 
 
 
-def game(cards_arr):
+def game(cards_arr = ):
     images_list = ["green", "green","blue","blue", "yellow","yellow", "red","red", "pink","pink", "orange","orange"]
     images_list_left = ["green", "green","blue","blue", "yellow","yellow", "red","red", "pink","pink", "orange","orange"]
 #     images_list = ['blue', 'blue','blue','blue','blue','blue','red','red','red','red','red','red',]
@@ -41,10 +42,13 @@ def b1(event):
     global turn1
     global points1
     global points2
+    global bool_end
     x = event.x
     y = event.y
     if cards_arr[old_numbers_of_pair[0]]["opened"] == False:
         canV.create_rectangle(cards_arr[old_numbers_of_pair[0]]["card_x"] , cards_arr[old_numbers_of_pair[0]]["card_y"] , cards_arr[old_numbers_of_pair[0]]["card_x"]+50 ,cards_arr[old_numbers_of_pair[0]]["card_y"]+50, fill="black")
+        bool_end = False
+
     if cards_arr[old_numbers_of_pair[1]]["opened"] == False:
         canV.create_rectangle(cards_arr[old_numbers_of_pair[1]]["card_x"] , cards_arr[old_numbers_of_pair[1]]["card_y"] , cards_arr[old_numbers_of_pair[1]]["card_x"]+50 ,cards_arr[old_numbers_of_pair[1]]["card_y"]+50, fill="black")
     for i in range(len(cards_arr)):
@@ -62,7 +66,23 @@ def b1(event):
                 points2+=1
                 text2.config(text='Пары второго игрока: '+str(points2))
         else:
+            bool_end = True
+            def fun_time():
+                print("start")
+                time_start = int(time.time())
+                # global old_numbers_of_pair
+                while(time_start+3 > int(time.time()) and bool_end):
+                    pass
+                canV.create_rectangle(cards_arr[old_numbers_of_pair[0]]["card_x"] , cards_arr[old_numbers_of_pair[0]]["card_y"] , cards_arr[old_numbers_of_pair[0]]["card_x"]+50 ,cards_arr[old_numbers_of_pair[0]]["card_y"]+50, fill="black")
+
+                canV.create_rectangle(cards_arr[old_numbers_of_pair[1]]["card_x"] , cards_arr[old_numbers_of_pair[1]]["card_y"] , cards_arr[old_numbers_of_pair[1]]["card_x"]+50 ,cards_arr[old_numbers_of_pair[1]]["card_y"]+50, fill="black")
+                print("end")
             old_numbers_of_pair = numbers_of_pair
+            thread_1 = threading.Thread(target=fun_time)
+            thread_1.start()
+
+            
+
             
             if turn1:
                 turn1=False

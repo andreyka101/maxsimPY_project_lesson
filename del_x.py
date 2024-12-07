@@ -18,7 +18,7 @@ old_numbers_of_pair= [0,0]
 
 
 
-def game(cards_arr = ):
+def game(cards_arr):
     images_list = ["green", "green","blue","blue", "yellow","yellow", "red","red", "pink","pink", "orange","orange"]
     images_list_left = ["green", "green","blue","blue", "yellow","yellow", "red","red", "pink","pink", "orange","orange"]
 #     images_list = ['blue', 'blue','blue','blue','blue','blue','red','red','red','red','red','red',]
